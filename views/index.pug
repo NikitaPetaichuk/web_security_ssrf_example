@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h1 Welcome to EditAR!
+  p Create your own avatar, using our incredible tools and your imagination! Just load your picture and see what you can do.
+  .load-wrapper
+    label(for='url-input-id') LOAD PICTURE BY URL:
+    input(id='url-input-id')
+    button(id='submit-url-input') LOAD
+  .load-wrapper
+    label(for='file-input-id') LOAD YOUR OWN IMAGE:
+    input(id='file-input-id' type='file' accept='image/png,image/jpeg')
+    button(id='submit-file-input') LOAD
+  img(src='/images/image_placeholder.jpg' id="avatar-id").img-to-edit
+  .control-buttons
+    button.tool-button
+      img(src="/images/icons/cut.png" title="Cut image").tool-image
+    button.tool-button
+      img(src="/images/icons/effects.png" title="Put effects on image").tool-image
+    button.tool-button
+      img(src="/images/icons/filters.png" title="Put filters on image").tool-image
+    button.tool-button
+      img(src="/images/icons/masks.png" title="Put masks on image").tool-image
+    button.tool-button
+      img(src="/images/icons/back.png" title="Roll back changes").tool-image
+    button.tool-button
+      img(src="/images/icons/save.png" title="Save avatar").tool-image
+    script(src="/javascripts/load_files.js")

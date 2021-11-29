@@ -1,0 +1,68 @@
+@font-face {
+  font-family: 'RoboFont';
+  src: url("/fonts/DisposableDroidBB.ttf") format("truetype");
+}
+
+body {
+  padding: 20px 50px;
+  font: 24px "RoboFont", "Roboto Thin", Arial, sans-serif;
+  text-align: center;
+  background: url("/images/background.jpg");
+}
+
+a {
+  color: #00B7FF;
+}
+
+input {
+  font: 20px "RoboFont", "Roboto Thin", Arial, sans-serif;
+  width: 40%;
+}
+
+button {
+  font: 24px "RoboFont", "Roboto Thin", Arial, sans-serif;
+  border: black 1px solid;
+}
+
+button:hover {
+  background: ghostwhite;
+}
+
+button:active {
+  filter: invert(100%);
+}
+
+.load-wrapper {
+  margin-bottom: 15px;
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.img-to-edit {
+  border: black 1px solid;
+  max-width: 60%;
+  max-height: 60%;
+  width: auto;
+  height: auto;
+}
+
+.control-buttons {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.tool-button {
+  padding: 5px 5px 2px;
+  border: black 2px solid;
+}
+
+.tool-image {
+  width: 72px;
+  height: 72px;
+}
