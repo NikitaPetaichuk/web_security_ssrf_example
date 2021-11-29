@@ -1,13 +1,21 @@
 function loadFileByURL() {
     let urlInput = document.getElementById('url-input-id');
     let url = urlInput.value;
+    let path = '/api/load_url';
+    if (correctVersion === 'true') {
+        path = '/api/load_url_correct';
+    }
 
     let request = new XMLHttpRequest();
-    request.open('POST', '/api/load_url');
+    request.open('POST', path);
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     request.onload = function () {
         if (request.status === 400) {
             alert("Picture by this URL is unavailable");
+        } else if (request.status === 403) {
+            alert("Operation is forbidden!");
+        } else if (request.status === 500) {
+            alert("Internal Server Error: couldn't load picture");
         } else if (request.status === 200) {
             let response = JSON.parse(request.response);
             let avatar = document.getElementById('avatar-id');

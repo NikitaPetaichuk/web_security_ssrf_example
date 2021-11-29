@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const multer = require('multer');
+const boolParser = require('express-query-boolean');
 const sha1 = require('sha1');
 
 const indexRouter = require('./routes/index');
@@ -35,10 +36,11 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(multer({storage: storageConfig, fileFilter: fileFilter}).single("picture"));
+app.use(boolParser());
 
 app.use('/', indexRouter);
 app.use('/api', apiRouter);

@@ -1,5 +1,5 @@
 const express = require('express');
-const request = require('request').defaults({ encoding: null });;
+const request = require('request').defaults({ encoding: null });
 const url = require('url');
 const sha1 = require("sha1");
 const path = require("path");
@@ -35,7 +35,7 @@ function handleURL(URL, pathToLoad, newFileName, callback) {
   }
 }
 
-/* POST file by URL. */
+/* POST file by URL (with vulnerability). */
 router.post('/load_url', function(req, res) {
   let reqURL = req.body.url;
   let fileName = sha1(reqURL);
@@ -45,10 +45,42 @@ router.post('/load_url', function(req, res) {
     if (code === 200) {
       res.json({path: '/loads/' + fileName});
     } else {
-      res.send("Picture by given URL is unavailable");
+      res.send("Error message");
     }
   }
   handleURL(reqURL, pathToLoad, fileName, responseHandler);
+});
+
+/* POST file by URL (correct). */
+router.post('/load_url_correct', function (req, res) {
+  let reqURL = req.body.url;
+  let fileName = sha1(reqURL);
+  let pathToLoad = path.join(__dirname, '../public/loads');
+
+  if (reqURL.startsWith("file://")) {
+    res.status(403);
+    res.send("Forbidden operation");
+  }
+  request.get(URL, null, function (error, response, body) {
+    if (!error && response.statusCode === 200) {
+      console.log(body);
+      let buffer = Buffer.from(body);
+      fs.writeFile(path.join(pathToLoad, fileName), buffer, 'binary',(err) => {
+        if (err) {
+          res.status(500);
+          res.send("Internal Server Error");
+        }
+      });
+    } else {
+      if (error) {
+        res.status(500);
+        res.send("Internal Server Error");
+      } else {
+        res.status(400);
+        res.send("Picture by given URL is unavailable");
+      }
+    }
+  });
 });
 
 /* POST local file. */
