@@ -1,4 +1,6 @@
 .idea
+/public/loads/*
+!/public/loads/.gitkeep
 
 # Logs
 logs
