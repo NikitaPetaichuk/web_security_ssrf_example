@@ -2,7 +2,6 @@ const express = require('express');
 const request = require('request').defaults({ encoding: null });
 const sha1 = require("sha1");
 const path = require("path");
-const fs = require("fs");
 
 const router = express.Router();
 
@@ -16,44 +15,20 @@ router.post('/load_url', function(req, res) {
     'pathToLoad': pathToLoad,
     'newFileName': fileName
   }
+
+  // Code for correction
+  if (reqURL.startsWith("file://")) {
+    res.status(403);
+    res.send("Forbidden operation");
+    return;
+  }
+
   request.post('http://localhost:4000', {json: dataToSend}, function (error, response) {
     if (!error && response.statusCode === 200) {
       res.status(200);
       res.json({path: '/loads/' + fileName});
     } else {
       if (error || response.statusCode === 500) {
-        res.status(500);
-        res.send("Internal Server Error");
-      } else {
-        res.status(400);
-        res.send("Picture by given URL is unavailable");
-      }
-    }
-  });
-});
-
-/* POST file by URL (correct). */
-router.post('/load_url_correct', function (req, res) {
-  let reqURL = req.body.url;
-  let fileName = sha1(reqURL);
-  let pathToLoad = path.join(__dirname, '../public/loads');
-
-  if (reqURL.startsWith("file://")) {
-    res.status(403);
-    res.send("Forbidden operation");
-  }
-  request.get(URL, null, function (error, response, body) {
-    if (!error && response.statusCode === 200) {
-      console.log(body);
-      let buffer = Buffer.from(body);
-      fs.writeFile(path.join(pathToLoad, fileName), buffer, 'binary',(err) => {
-        if (err) {
-          res.status(500);
-          res.send("Internal Server Error");
-        }
-      });
-    } else {
-      if (error) {
         res.status(500);
         res.send("Internal Server Error");
       } else {

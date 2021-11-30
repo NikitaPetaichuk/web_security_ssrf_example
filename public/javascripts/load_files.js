@@ -2,9 +2,6 @@ function loadFileByURL() {
     let urlInput = document.getElementById('url-input-id');
     let url = urlInput.value;
     let path = '/api/load_url';
-    if (correctVersion === 'true') {
-        path = '/api/load_url_correct';
-    }
 
     let request = new XMLHttpRequest();
     request.open('POST', path);

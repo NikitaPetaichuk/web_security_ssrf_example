@@ -37,3 +37,19 @@ node file_handler_server.js
 ```shell
 node bin/www
 ```
+
+или
+
+```shell
+npm start
+```
+
+
+## Проверка на уязвиомсть
+
+Для проверки того, подвержено ли приложение SSRF атаке, существует скрипт test.js. Для его запуска неходимо ввести одну из двух команд:
+
+```shell
+node test.js  # 1
+npm test  # 2
+```
