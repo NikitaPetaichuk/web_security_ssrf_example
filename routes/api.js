@@ -16,14 +16,16 @@ router.post('/load_url', function(req, res) {
     'newFileName': fileName
   }
 
+  /*
   // Code for correction
   if (reqURL.startsWith("file://")) {
     res.status(403);
     res.send("Forbidden operation");
     return;
   }
+  */
 
-  request.post('http://localhost:4000', {json: dataToSend}, function (error, response) {
+  request.post('http://127.0.0.1:4000', {json: dataToSend}, function (error, response) {
     if (!error && response.statusCode === 200) {
       res.status(200);
       res.json({path: '/loads/' + fileName});
